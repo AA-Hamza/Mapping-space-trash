@@ -9,7 +9,7 @@ import requests,json
 # resp = requests.get(url = URL)
 # data=resp.json()
 
-with open('data.json') as file:
+with open('static/data/data.json') as file:
 	data = json.load(file) 	#read the data
 	with Session(engine) as session:     #initialize session
 		for row in data:

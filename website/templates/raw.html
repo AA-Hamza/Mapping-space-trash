@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% block content %}
+  <table class="table table-striped">
+      <thead class='thead-dark'>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">INTLDES</th>
+          <th scope="col">NORAD_CAT_ID</th>
+          <th scope="col">OBJECT_TYPE</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for index,object in enumerate(data) %}
+          <tr>
+            <th scope="row">{{index}}</th>
+            <td>{{object.INTLDES}}</td>
+            <td>{{object.NORAD_CAT_ID}}</td>
+            <td>{{object.OBJECT_TYPE}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+  </table>	
+{% endblock content %}
