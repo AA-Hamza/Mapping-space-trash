@@ -4,7 +4,6 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 engine= create_engine('sqlite:///objects.db')
 
-
 class Object(Base):
 	__tablename__ ='objects'
 
@@ -29,6 +28,6 @@ class Object(Base):
 	OBJECT_ID =Column(String)
 	OBJECT_NUMBER =Column(Integer)
 	
-Base.metadata.create_all(bind=engine)
 
-
+if __name__ == "__main__":
+	Base.metadata.create_all(bind=engine)
