@@ -1,0 +1,2 @@
+SQLAlchemy == 1.4.22
+requests == 2.26.0
