@@ -23,7 +23,7 @@ stars.side = THREE.BackSide
 scene.add(new THREE.Mesh(sky, stars))
 
 // globe
-const sphere = globe.globe(0.5, earthTexture, earthNormalMap);
+const sphere = globe.globe(1, earthTexture, earthNormalMap);
 scene.add(sphere)
 
 // Lights
@@ -58,7 +58,10 @@ scene.add(camera)
 
 // Controls
 const controls = new OrbitControls(camera, canvas)
-controls.enableDamping = true
+controls.enableDamping = true;
+controls.rotateSpeed = 0.6;
+controls.minDistance = 1.4;
+controls.maxDistance = 7;
 
 
 // Renderer
