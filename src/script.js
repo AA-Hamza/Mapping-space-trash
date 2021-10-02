@@ -19,7 +19,7 @@ const textureLoader = new THREE.TextureLoader()
 const earthTexture = textureLoader.load('textures/EarthTexture.jpg')
 const earthNormalMap = textureLoader.load('textures/NormalMap.jpg')
 const starsTexture = textureLoader.load('textures/8k_stars_milky_way.jpg')
-const debrisTexture = textureLoader.load('textures/shiphull.jpg')
+const debrisTexture = textureLoader.load('textures/circle.png')
 
 // sky
 const sky = new THREE.SphereGeometry(90, 64, 64)
@@ -61,21 +61,11 @@ window.addEventListener('resize', () =>
 })
 
 // Camera
-const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.01, 1000)
-const debris_camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.01, 1000)
+export const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.01, 1000)
 camera.position.x = 0
 camera.position.y = 0
 camera.position.z = 1.5
 scene.add(camera)
-function move_camera_to_debri(camera, debrie) {
-    const x = debrie.position.x;
-    const y = debrie.position.y;
-    const z = debrie.position.z;
-    camera.position.x = x+(0.2)*x;
-    camera.position.y = y+(0.2)*y;
-    camera.position.z = z+(0.2)*z;
-    camera.lookAt(0, 0, 0);
-}
 
 
 // Controls
@@ -100,57 +90,10 @@ scene.add(...debris_objects);
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
 })
+
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
-//MouseMove hightlight object
-var mouse = new THREE.Vector2(0,0);
-var raygun = new THREE.Raycaster();
-var raygun2 = new THREE.Raycaster();
-var useRaycast = true;
-var INTERSECTED;
-var prev_color;
-
-// Raycast when we click the mouse
-function MouseMove() {
-    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-    mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-
-    var hits;
-    if (useRaycast) {
-        raygun.setFromCamera(mouse, camera);
-        hits = raygun.intersectObjects(debris_objects, false);
-    }
-    if (hits.length > 0) {
-        if (INTERSECTED != hits[0].object) {
-            if (INTERSECTED != null) {
-                INTERSECTED.material.color.set(prev_color) 
-            }
-            INTERSECTED = hits[0].object;
-            //move_camera_to_debri(camera, INTERSECTED);
-            prev_color = INTERSECTED.material.color.getHex();
-            INTERSECTED.material.color.setHex( 0xff0000 );
-        }
-    } 
-    else {
-        if (INTERSECTED) 
-            INTERSECTED.material.color.set(prev_color) 
-        INTERSECTED = null;
-    }
-}
-function onClick() {
-    var hits;
-    if (useRaycast) {
-        raygun.setFromCamera(mouse, camera);
-        hits = raygun.intersectObjects(debris_objects, false);
-    }
-    if (hits.length > 0) {
-        move_camera_to_debri(camera, hits[0].object);
-    }
-}
-
-window.addEventListener('mousemove', MouseMove, false);
-window.addEventListener('click', onClick, false);
 
 //Animation
 const clock = new THREE.Clock()
