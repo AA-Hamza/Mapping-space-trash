@@ -13,3 +13,17 @@ export function draw(vertices, texture, scale) {
     }
     return debris_objects;
 }
+
+export function drawPath(scene, xRadius, yRadius, rotationAngle = 0, startAngle = 0, endAngle = 2 * Math.PI, color = 0xff0000) {
+    var curve = new THREE.EllipseCurve(
+        0, 0,             
+        xRadius, yRadius,
+        startAngle, endAngle,
+        false,
+        0         
+    );
+    var points = curve.getSpacedPoints( 100 );
+    var line = new THREE.Line(new THREE.BufferGeometry().setFromPoints( points ), new THREE.LineBasicMaterial({ color: color }));
+    line.rotation.y += rotationAngle
+    scene.add(line);
+}
