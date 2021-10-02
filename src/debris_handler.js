@@ -18,6 +18,35 @@ export function draw_debris(debris, texture) {
     return debris_objects = draw(debris, texture, debris_size);
 }
 
+let tmp_info_object = {
+    name: 'FENGYUN 1C DEB',
+    type: 'DEBRIS',
+    apogee: '891 Km',
+    perigee: '841 Km',
+    inclination: '99.05 deg',
+    altitude: '874.59 km',
+    velocity: '7.41 Km/s',
+    period: '102.12 min',
+}
+function get_name(id) {
+    let to_text = `${tmp_info_object.name}`
+    return to_text;
+}
+
+function print_info(id) {
+    //There should be a function exposed in script that gives this info based on the id of the debris
+    let to_text = `name: ${tmp_info_object.name}
+    <br>Type: ${tmp_info_object.type}
+    <br>Apogee: ${tmp_info_object.apogee}
+    <br>Perigee: ${tmp_info_object.perigee}
+    <br>Inclination: ${tmp_info_object.inclination}
+    <br>Altitude: ${tmp_info_object.altitude}
+    <br>Velocity: ${tmp_info_object.velocity}
+    <br>Period: ${tmp_info_object.period}
+        `;
+    document.getElementById('debris-info').innerHTML = to_text;
+}
+
 //MouseMove hightlight object
 var mouse = new THREE.Vector2(0,0);
 var raygun = new THREE.Raycaster();
@@ -36,20 +65,24 @@ function MouseMove() {
         raygun.setFromCamera(mouse, camera);
         hits = raygun.intersectObjects(debris_objects, false);
     }
+    const debris_name_card = document.getElementById("debris-name");
+    const debris_name_container = document.getElementById("debris-mouseover-name");
     if (hits.length > 0) {
         if (INTERSECTED != hits[0].object) {
             if (INTERSECTED == null) {
                 INTERSECTED = hits[0].object;
                 prev_material = INTERSECTED.material;
                 INTERSECTED.material = material;
+                debris_name_container.style.display = "block";
+                debris_name_card.innerHTML = get_name();
             }
-            //prev_color = INTERSECTED.material.color.getHex();
-            //INTERSECTED.material.color.setHex( 0xff0000 );
         }
     } 
     else {
-        if (INTERSECTED) 
+        if (INTERSECTED) {
             INTERSECTED.material = prev_material;
+            debris_name_container.style.display = "none";
+        }
         INTERSECTED = null;
     }
 }
@@ -61,12 +94,13 @@ function onClick() {
     }
     if (hits.length > 0) {
         move_camera_to_debri(camera, hits[0].object);
+        print_info(hits[0].object.debris_id);
     }
 }
-function move_camera_to_debri(camera, debrie) {
-    const x = debrie.position.x;
-    const y = debrie.position.y;
-    const z = debrie.position.z;
+function move_camera_to_debri(camera, debris) {
+    const x = debris.position.x;
+    const y = debris.position.y;
+    const z = debris.position.z;
     //const new_position = new THREE.Vector3(x, y, z);
     //camera.position.lerp(new_position, 0.2);
     camera.position.x = x+(0.3)*x;

@@ -4,7 +4,6 @@ export function draw(vertices, texture, scale) {
     let debris_objects = [];
     // I am making them all the same material and when clicked I will just create a new one, that should quite a space
     const material = new THREE.SpriteMaterial( { map: texture} );
-    material.sizeAttenuation = true;
     for (let i = 0; i < vertices.length; ++i) {
         const sprite = new THREE.Sprite( material );
         sprite.scale.set(scale, scale, scale);
