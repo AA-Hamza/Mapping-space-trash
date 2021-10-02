@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
 import * as globe from './globe.js'
-import * as debris from './debris.js'
+import * as debris_handler from './debris_handler.js'
 
 
 //CONSTANTS
@@ -81,9 +81,10 @@ for (let i = 0; i < 400; ++i) {
     let x = 40*Math.random()-20;
     let y = 40*Math.random()-20;
     let z = 40*Math.random()-20;
-    random_debris.push([x, y, z])
+    random_debris.push([i, x, y, z])
 }
-const debris_objects = debris.debris(random_debris, debrisTexture);
+// Debris should be passed with ([ [debris_id, x, y, z], ...], Texture to draw)
+const debris_objects = debris_handler.draw_debris(random_debris, debrisTexture);
 scene.add(...debris_objects);
 
 // Renderer
