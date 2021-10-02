@@ -4,6 +4,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
 import * as globe from './globe.js'
 import * as debris_handler from './debris_handler.js'
+import {get_slider_value} from './slider'
+
 
 
 //CONSTANTS
