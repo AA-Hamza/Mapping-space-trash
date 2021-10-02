@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {camera} from './script.js';
 import {draw} from './debris.js';
+import * as TWEEN from "@tweenjs/tween.js";
 
 const debris_size = 0.2;
 
@@ -98,15 +99,24 @@ function onClick() {
     }
 }
 function move_camera_to_debri(camera, debris) {
-    const x = debris.position.x;
-    const y = debris.position.y;
-    const z = debris.position.z;
-    //const new_position = new THREE.Vector3(x, y, z);
-    //camera.position.lerp(new_position, 0.2);
-    camera.position.x = x+(0.3)*x;
-    camera.position.y = y+(0.3)*y;
-    camera.position.z = z+(0.3)*z;
-    camera.lookAt(0, 0, 0);
+    const factor = 0.3;
+    const targetCoordinates = {
+        x: debris.position.x + factor * debris.position.x,
+        y: debris.position.y + factor * debris.position.y,
+        z: debris.position.z + factor * debris.position.z
+    };
+    const cameraCoordinates = { 
+        x: camera.position.x,
+        y: camera.position.y,
+        z: camera.position.z
+    };
+    new TWEEN.Tween(cameraCoordinates)
+    .to(targetCoordinates)
+    .onUpdate(() => {
+      camera.position.set(cameraCoordinates.x, cameraCoordinates.y, cameraCoordinates.z);
+      camera.lookAt(0, 0, 0);
+    })
+    .start();
 }
 
 window.addEventListener('mousemove', MouseMove, false);

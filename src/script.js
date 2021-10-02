@@ -5,8 +5,7 @@ import * as dat from 'dat.gui'
 import * as globe from './globe.js'
 import * as debris_handler from './debris_handler.js'
 import {get_slider_value} from './slider'
-
-
+import * as TWEEN from "@tweenjs/tween.js";
 
 //CONSTANTS
 const EARTH_RADIUS = 10;
@@ -99,14 +98,11 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 
 //Animation
-const clock = new THREE.Clock()
-
-const tick = () =>
-{
-
-    const elapsedTime = clock.getElapsedTime()
+function tick (time) {
     controls.update()
     renderer.render(scene, camera)
-    window.requestAnimationFrame(tick)
+    TWEEN.update(time);
+    requestAnimationFrame(tick);
 }
-tick()
+
+tick(0);
