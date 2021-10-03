@@ -108,19 +108,17 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
-
-//const mycl = new THREE.CylinderGeometry(12, 12, 12, 32);
-//const myclm = new THREE.MeshBasicMaterial({transparent: true, opacity: 0.2});
-//const shit = new THREE.Mesh(mycl, myclm)
-//console.log(shit)
-//scene.add(shit)
-
 //Animation
+let frames = 0
 function tick(time) {
+    frames += 1
+    if (frames == 60) {
+        debris_handler.updateDebrisPositions();
+        frames = 0;
+    }
     controls.update()
     renderer.render(scene, camera)
     TWEEN.update(time);
-    debris_handler.updateDebrisPositions();
     requestAnimationFrame(tick);
 }
 
