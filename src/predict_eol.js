@@ -1,8 +1,9 @@
 //https://www.nasa.gov/news/debris_faq.html
 //https://www.universetoday.com/150233/how-long-will-spacejunk-take-to-burn-up-heres-a-handy-chart/
 
-export function predict_eol(apogee, penigee) {
-    const mean = (apogee+penigee)/2;
+export function predict_eol(height) {
+    const mean = parseInt(height);//(apogee+penigee)/2;
+    console.log(mean)
     if (mean <= 500) {
         return '1-25 years';
     }
