@@ -4,6 +4,7 @@ import { draw } from './debris.js';
 import * as TWEEN from "@tweenjs/tween.js";
 import { debris } from './satellite_registry.js'
 import { getStationPosition } from './satellite_util.js';
+import { predict_eol } from './predict_eol.js';
 
 const debris_size = 0.2;
 
@@ -30,6 +31,7 @@ export const updateDebrisPositions = () => {
     }
 }
 
+/*
 let tmp_info_object = {
     name: 'FENGYUN 1C DEB',
     type: 'DEBRIS',
@@ -40,6 +42,7 @@ let tmp_info_object = {
     velocity: '7.41 Km/s',
     period: '102.12 min',
 }
+*/
 function get_name(id) {
     let to_text = `${debris[id].name}`
     return to_text;
@@ -47,14 +50,13 @@ function get_name(id) {
 
 function print_info(id) {
     //There should be a function exposed in script that gives this info based on the id of the debris
+    //console.log(debris[id])
     let to_text = `name: ${get_name(id)}
-    <br>Type: ${tmp_info_object.type}
-    <br>Apogee: ${tmp_info_object.apogee}
-    <br>Perigee: ${tmp_info_object.perigee}
-    <br>Inclination: ${tmp_info_object.inclination}
-    <br>Altitude: ${debris[id].geodeticProperties.height}
-    <br>Velocity: ${debris[id].velocity}
-    <br>Period: ${tmp_info_object.period}
+    <br>height: ${debris[id].geodeticProperties.height.toFixed(4)} Km
+    <br>latitude: ${debris[id].geodeticProperties.latitude.toFixed(4)}
+    <br>longitude: ${debris[id].geodeticProperties.longitude.toFixed(4)}
+    <br>Velocity: ${debris[id].velocity.toFixed(4)} Km/s
+    <br>Falling to earth: ${predict_eol(debris[id].geodeticProperties.height)}
         `;
     document.getElementById('debris-info').innerHTML = to_text;
 }

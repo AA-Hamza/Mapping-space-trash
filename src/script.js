@@ -1,23 +1,17 @@
 import './style.css'
 import * as THREE from 'three'
-import {
-    OrbitControls
-} from 'three/examples/jsm/controls/OrbitControls.js'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
 import * as globe from './globe.js'
 import * as debris_handler from './debris_handler.js'
-import {
-    get_slider_value
-} from './slider.js'
+import { get_slider_value } from './slider.js'
 import * as TWEEN from "@tweenjs/tween.js";
-import {
-    drawPath
-} from './debris'
+import { drawPath } from './debris'
 import "./area_selector.js";
+import { sgp4 } from 'satellite.js';
 import { parseStationsFromFile, getStationPosition } from "./satellite_util.js";
 import { debris } from './satellite_registry'
 
-//CONSTANTS
 export const REAL_EARTH_RADIUS = 6371;
 export const EARTH_RADIUS = 10;
 export const SCALE_RATIO = EARTH_RADIUS / REAL_EARTH_RADIUS;
@@ -50,7 +44,9 @@ scene.add(new THREE.Mesh(sky, stars))
 
 // globe
 const sphere = globe.globe(EARTH_RADIUS, earthTexture, earthNormalMap);
+//const atmosphere = globe.atmosphere(EARTH_RADIUS-1);
 scene.add(sphere)
+//scene.add(atmosphere)
 
 // Lights
 scene.add(new THREE.AmbientLight(0x333333, 5));
@@ -119,10 +115,8 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 //console.log(shit)
 //scene.add(shit)
 
-let flag = 0;
 //Animation
 function tick(time) {
-    flag += 1
     controls.update()
     renderer.render(scene, camera)
     TWEEN.update(time);

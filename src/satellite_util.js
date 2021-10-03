@@ -3,6 +3,7 @@ import { SCALE_RATIO } from './script';
 
 export const parseStationsFromFile = (url) => {
     var request = new XMLHttpRequest();
+    request.withCredentials = false;
     request.open('GET', url, false);  // `false` makes the request synchronous
     request.send(null);
     const stations = [];

@@ -6,10 +6,13 @@ export function draw(vertices, texture, scale) {
     const material = new THREE.SpriteMaterial( { map: texture} );
     material.needsUpdate = false;
     for (let i = 0; i < vertices.length; ++i) {
+    //for (const debris_id in vertices) {
         const sprite = new THREE.Sprite( material );
         sprite.scale.set(scale, scale, scale);
         sprite.position.set(vertices[i][1], vertices[i][2], vertices[i][3]);
-        sprite["debris_id"] = vertices[i][0];
+        //sprite.position.set(vertices[debris_id][0], vertices[debris_id][1], vertices[debris_id][2]);
+        //sprite["debris_id"] = debris_id;
+        sprite["debris_id"] = i;
         debris_objects.push(sprite);
     }
     return debris_objects;
