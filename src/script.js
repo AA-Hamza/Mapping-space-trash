@@ -6,6 +6,7 @@ import * as globe from './globe.js'
 import * as debris_handler from './debris_handler.js'
 import {get_slider_value} from './slider.js'
 import * as TWEEN from "@tweenjs/tween.js";
+import { drawPath } from './debris'
 import "./area_selector.js";
 
 //CONSTANTS
