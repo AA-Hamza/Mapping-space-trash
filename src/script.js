@@ -126,6 +126,7 @@ function tick(time) {
     controls.update()
     renderer.render(scene, camera)
     TWEEN.update(time);
+    debris_handler.updateDebrisPositions();
     requestAnimationFrame(tick);
 }
 

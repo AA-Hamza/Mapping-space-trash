@@ -3,6 +3,7 @@ import { camera } from './script.js';
 import { draw } from './debris.js';
 import * as TWEEN from "@tweenjs/tween.js";
 import { debris } from './satellite_registry.js'
+import { getStationPosition } from './satellite_util.js';
 
 const debris_size = 0.2;
 
@@ -18,6 +19,15 @@ export function draw_debris(debris, texture) {
     material = new THREE.SpriteMaterial( { map: debris_texture} );
     material.color.set(0xff0000);
     return debris_objects = draw(debris, texture, debris_size);
+}
+
+export const updateDebrisPositions = () => {
+    let date = new Date();
+    for (let i = 0; i < debris_objects.length; i++) {
+        let pos = getStationPosition(debris[debris_objects[i].debris_id], date);
+        debris_objects[i].position.set(pos[0], pos[1], pos[2]);
+        console.log(pos);
+    }
 }
 
 let tmp_info_object = {
@@ -119,6 +129,8 @@ function move_camera_to_debri(camera, debris) {
     })
     .start();
 }
+
+
 
 window.addEventListener('mousemove', MouseMove, false);
 window.addEventListener('click', onClick, false);
