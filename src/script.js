@@ -8,6 +8,7 @@ import {get_slider_value} from './slider.js'
 import * as TWEEN from "@tweenjs/tween.js";
 import { drawPath } from './debris'
 import "./area_selector.js";
+import { sgp4 } from 'satellite.js';
 
 //CONSTANTS
 export const REAL_EARTH_RADIUS = 6371;
@@ -42,7 +43,9 @@ scene.add(new THREE.Mesh(sky, stars))
 
 // globe
 const sphere = globe.globe(EARTH_RADIUS, earthTexture, earthNormalMap);
+//const atmosphere = globe.atmosphere(EARTH_RADIUS-1);
 scene.add(sphere)
+//scene.add(atmosphere)
 
 // Lights
 scene.add(new THREE.AmbientLight(0x333333, 5));
@@ -114,12 +117,8 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 //console.log(shit)
 //scene.add(shit)
 
-let flag = 0;
 //Animation
 function tick (time) {
-    if (flag == 600)
-        console.log(scene.children)
-    flag += 1
     controls.update()
     renderer.render(scene, camera)
     TWEEN.update(time);
