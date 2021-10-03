@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+    <script>
+        function AreaSelectorDropDown() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+    </script>
+    <title>Cicada</title>
+</head>
+<body>
+    <div id="debris-mouseover-name" class="debris-mouseover-name">
+        <div class="debris-info">
+            <p id="debris-name">
+            </p>
+        </div>
+    </div>
+    <div class="debris-card">
+        <div class="debris-info">
+            <p id="debris-info">
+            </p>
+        </div>
+    </div>
+    <div class="dropdown">
+        <button onclick="AreaSelectorDropDown()" class="dropbtn">Area Selector</button>
+        <div id="myDropdown" class="dropdown-content">
+            <div class=dropdown-item>
+            <span>Latitude</span> <input id="latitude-btn" class="number-field" type="number"/>
+            </div>
+            <div class=dropdown-item>
+            <span>Longitude</span><input id="longitude-btn" class="number-field" type="number"/>
+            </div>
+            <div class=dropdown-item>
+            <span>Altitude</span> <input id="altitude-btn" class="number-field" type="number"/>
+            </div>
+            <div class=dropdown-item>
+            <span>Radius</span>   <input id="radius-btn" class="number-field" type="number"/>
+            </div>
+            <div class=dropdown-item>
+            <button id="area-selector-test" class="area-button">test</button>
+            </div>
+            <div class=dropdown-item>
+            <button id="area-selector-submit" class="area-button">submit</button>
+            </div>
+        </div>
+      </div>
+    <div class="slidecontainer">
+        <span>Time Slider:&nbsp;</span>
+        <output>0</output>
+        <input type="range" min="-24" max="24" value="0" class="slider" id="time-slider" oninput="this.previousElementSibling.value= this.value">
+        <button id="slider-button" class="slider-button">submit</button>
+    </div>
+    <canvas class="webgl"></canvas>
+</body>
+</html>
