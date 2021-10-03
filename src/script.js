@@ -1,18 +1,26 @@
 import './style.css'
 import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import {
+    OrbitControls
+} from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
 import * as globe from './globe.js'
 import * as debris_handler from './debris_handler.js'
-import {get_slider_value} from './slider.js'
+import {
+    get_slider_value
+} from './slider.js'
 import * as TWEEN from "@tweenjs/tween.js";
-import { drawPath } from './debris'
+import {
+    drawPath
+} from './debris'
 import "./area_selector.js";
+import { parseStationsFromFile, getStationPosition } from "./satellite_util.js";
+import { debris } from './satellite_registry'
 
 //CONSTANTS
 export const REAL_EARTH_RADIUS = 6371;
 export const EARTH_RADIUS = 10;
-export const SCALE_RATIO = EARTH_RADIUS/REAL_EARTH_RADIUS;
+export const SCALE_RATIO = EARTH_RADIUS / REAL_EARTH_RADIUS;
 
 //Basic stuff
 //const gui = new dat.GUI()
@@ -62,8 +70,7 @@ const sizes = {
     height: window.innerHeight
 }
 
-window.addEventListener('resize', () =>
-{
+window.addEventListener('resize', () => {
     sizes.width = window.innerWidth
     sizes.height = window.innerHeight
     camera.aspect = sizes.width / sizes.height
@@ -84,19 +91,17 @@ scene.add(camera)
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true;
 controls.rotateSpeed = 0.6;
-controls.minDistance = EARTH_RADIUS+1;
-controls.maxDistance = 10*EARTH_RADIUS;
+controls.minDistance = EARTH_RADIUS + 1;
+controls.maxDistance = 10 * EARTH_RADIUS;
 
 //debris
-let random_debris = []
-for (let i = 0; i < 400; ++i) {
-    let x = 40*Math.random()-20;
-    let y = 40*Math.random()-20;
-    let z = 40*Math.random()-20;
-    random_debris.push([i, x, y, z])
+var debris_positions = [];
+let date = new Date();
+for (let i = 0; i < debris.length; i++) {
+    debris_positions.push([i, ...getStationPosition(debris[i], date)]);
 }
 // Debris should be passed with ([ [debris_id, x, y, z], ...], Texture to draw)
-const debris_objects = debris_handler.draw_debris(random_debris, debrisTexture);
+const debris_objects = debris_handler.draw_debris(debris_positions, debrisTexture);
 scene.add(...debris_objects);
 
 // Renderer
@@ -116,9 +121,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 let flag = 0;
 //Animation
-function tick (time) {
-    if (flag == 600)
-        console.log(scene.children)
+function tick(time) {
     flag += 1
     controls.update()
     renderer.render(scene, camera)

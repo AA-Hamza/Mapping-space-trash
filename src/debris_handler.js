@@ -1,7 +1,8 @@
 import * as THREE from 'three';
-import {camera} from './script.js';
-import {draw} from './debris.js';
+import { camera } from './script.js';
+import { draw } from './debris.js';
 import * as TWEEN from "@tweenjs/tween.js";
+import { debris } from './satellite_registry.js'
 
 const debris_size = 0.2;
 
@@ -30,19 +31,19 @@ let tmp_info_object = {
     period: '102.12 min',
 }
 function get_name(id) {
-    let to_text = `${tmp_info_object.name}`
+    let to_text = `${debris[id].name}`
     return to_text;
 }
 
 function print_info(id) {
     //There should be a function exposed in script that gives this info based on the id of the debris
-    let to_text = `name: ${tmp_info_object.name}
+    let to_text = `name: ${get_name(id)}
     <br>Type: ${tmp_info_object.type}
     <br>Apogee: ${tmp_info_object.apogee}
     <br>Perigee: ${tmp_info_object.perigee}
     <br>Inclination: ${tmp_info_object.inclination}
-    <br>Altitude: ${tmp_info_object.altitude}
-    <br>Velocity: ${tmp_info_object.velocity}
+    <br>Altitude: ${debris[id].geodeticProperties.height}
+    <br>Velocity: ${debris[id].velocity}
     <br>Period: ${tmp_info_object.period}
         `;
     document.getElementById('debris-info').innerHTML = to_text;
@@ -75,7 +76,7 @@ function MouseMove() {
                 prev_material = INTERSECTED.material;
                 INTERSECTED.material = material;
                 debris_name_container.style.display = "block";
-                debris_name_card.innerHTML = get_name();
+                debris_name_card.innerHTML = get_name(INTERSECTED.debris_id);
             }
         }
     } 
