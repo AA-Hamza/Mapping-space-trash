@@ -4,16 +4,26 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
 import * as globe from './globe.js'
 import * as debris_handler from './debris_handler.js'
-import {get_slider_value} from './slider'
+import {get_slider_value} from './slider.js'
 import * as TWEEN from "@tweenjs/tween.js";
+import "./area_selector.js";
 
 //CONSTANTS
-const EARTH_RADIUS = 10;
+export const REAL_EARTH_RADIUS = 6371;
+export const EARTH_RADIUS = 10;
+export const SCALE_RATIO = EARTH_RADIUS/REAL_EARTH_RADIUS;
 
 //Basic stuff
-const gui = new dat.GUI()
+//const gui = new dat.GUI()
 const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
+
+export function add_to_scene(obj) {
+    scene.add(obj);
+}
+export function remove_from_scene(obj) {
+    scene.remove(obj);
+}
 
 // Textures
 const textureLoader = new THREE.TextureLoader()
@@ -39,10 +49,10 @@ const light = new THREE.DirectionalLight(0xffffff, 0.15)
 light.castShadow = true;
 
 light.position.set(100, 100, 0).normalize();
-gui.add(light, 'intensity').min(0).max(8).step(0.01)
-gui.add(light.position, 'x')
-gui.add(light.position, 'y')
-gui.add(light.position, 'z')
+//gui.add(light, 'intensity').min(0).max(8).step(0.01)
+//gui.add(light.position, 'x')
+//gui.add(light.position, 'y')
+//gui.add(light.position, 'z')
 scene.add(light)
 
 //Canvas Size
@@ -97,8 +107,18 @@ renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 
+//const mycl = new THREE.CylinderGeometry(12, 12, 12, 32);
+//const myclm = new THREE.MeshBasicMaterial({transparent: true, opacity: 0.2});
+//const shit = new THREE.Mesh(mycl, myclm)
+//console.log(shit)
+//scene.add(shit)
+
+let flag = 0;
 //Animation
 function tick (time) {
+    if (flag == 600)
+        console.log(scene.children)
+    flag += 1
     controls.update()
     renderer.render(scene, camera)
     TWEEN.update(time);
