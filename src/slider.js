@@ -10,7 +10,8 @@ export function get_slider_value()
     //return parseInt(slider.value);
 }
 
-function set_new_time() {
+function set_new_time(event) {
+    event.cancelBubble = true;
     slider_val = parseInt(slider.value);
     //let diff = parseInt(get_slider_value());
 

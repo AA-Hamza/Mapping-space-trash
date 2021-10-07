@@ -5,6 +5,7 @@ import * as TWEEN from "@tweenjs/tween.js";
 import { debris } from './satellite_registry.js'
 import { getStationPosition } from './satellite_util.js';
 import { predict_eol } from './predict_eol.js';
+import { degreesLong, degreesLat } from 'satellite.js';
 
 const debris_size = 0.2;
 
@@ -53,8 +54,8 @@ export function get_info(id) {
     let info = {
         id: id,
         height: debris[id].geodeticProperties.height,
-        latitude: debris[id].geodeticProperties.latitude*(180/Math.PI),
-        longitude: debris[id].geodeticProperties.longitude*(180/Math.PI),
+        longitude: degreesLat(debris[id].geodeticProperties.latitude),
+        latitude: degreesLong(debris[id].geodeticProperties.longitude),
         velocity: debris[id].velocity,
     };
     return info;
@@ -135,5 +136,6 @@ function move_camera_to_debri(camera, debris) {
 
 
 
-window.addEventListener('mousemove', MouseMove, false);
-window.addEventListener('click', onClick, false);
+window.addEventListener('mousemove', MouseMove, true);
+//window.addEventListener('', onClick, false);
+window.addEventListener('dblclick', onClick, true);
