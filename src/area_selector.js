@@ -29,7 +29,8 @@ function get_values() {
     return data;
 }
 
-function test_area() {
+function test_area(event) {
+    event.cancelBubble = true;
     let data = get_values();
     console.log(data)
     if (prev_obj) {
@@ -54,8 +55,8 @@ function test_area() {
     cylinderMat.wireframe = true;
     console.log(cylinderMat)
     const my_cyli = new THREE.Mesh(cylinderGeo, cylinderMat);
-    my_cyli.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), ((data.latitude)*Math.PI)/180);
-    my_cyli.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), ((data.longitude)*Math.PI)/180);
+    my_cyli.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), ((data.latitude-90)*Math.PI)/180);
+    my_cyli.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), ((data.longitude-90)*Math.PI)/180);
     prev_obj = my_cyli
     add_to_scene(my_cyli);
 }
@@ -90,7 +91,7 @@ export function show_number_of_debris_in_area() {         //Period will be in mi
         }
     }
     else {
-        for (let time = 0; time < period*60; time += 10) {
+        for (let time = 0; time < period*60; time += 20) {
             for (let i = 0; i < debris_objects.length; ++i) {
                 let info = get_info(i);
                 if (info != undefined) {
@@ -111,7 +112,8 @@ function deg2rad(deg) {
   return deg * (Math.PI/180)
 }
 
-function sumbit_onclick() {
+function sumbit_onclick(event) {
+    event.cancelBubble = true;
     //console.log(latitude_btn.value)
     //console.log(longitude_btn.value)
     //console.log(altitude_btn.value)

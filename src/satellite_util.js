@@ -31,7 +31,7 @@ export const parseStationsFromFile = (url) => {
 }
 
 const getScaledCoordinates = (v) => {
-    let coords = [v.x, v.y, v.z];
+    let coords = [v.y, v.z, v.x];
     for (let i = 0; i < coords.length; i++) {
         coords[i] *= SCALE_RATIO;
     } 
@@ -45,5 +45,6 @@ export const getStationPosition = (station, date) => {
     const geodeticProperties = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
     station.geodeticProperties = geodeticProperties;
     station.velocity = Math.sqrt(Math.pow(positionAndVelocity.velocity.x, 2) + Math.pow(positionAndVelocity.velocity.y, 2) + Math.pow(positionAndVelocity.velocity.z, 2));
-    return getScaledCoordinates(positionAndVelocity.position);
+    return getScaledCoordinates(satellite.eciToEcf(positionAndVelocity.position, gmst));
+    //return getScaledCoordinates(positionAndVelocity.position, gmst);
 }
