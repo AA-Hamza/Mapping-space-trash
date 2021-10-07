@@ -54,7 +54,7 @@ function test_area() {
     cylinderMat.wireframe = true;
     console.log(cylinderMat)
     const my_cyli = new THREE.Mesh(cylinderGeo, cylinderMat);
-    my_cyli.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), ((data.latitude-90)*Math.PI)/180);
+    my_cyli.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), ((data.latitude)*Math.PI)/180);
     my_cyli.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), ((data.longitude)*Math.PI)/180);
     prev_obj = my_cyli
     add_to_scene(my_cyli);
