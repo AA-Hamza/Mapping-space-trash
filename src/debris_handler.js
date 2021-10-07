@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { camera } from './script.js';
+import { scene, camera } from './script.js';
 import { draw } from './debris.js';
 import * as TWEEN from "@tweenjs/tween.js";
 import { debris } from './satellite_registry.js'
@@ -22,27 +22,14 @@ export function draw_debris(debris, texture) {
     return debris_objects = draw(debris, texture, debris_size);
 }
 
-export const updateDebrisPositions = () => {
-    let date = new Date();
+export const updateDebrisPositions = (date) => {
+    //let date = new Date();
+
     for (let i = 0; i < debris_objects.length; i++) {
         let pos = getStationPosition(debris[debris_objects[i].debris_id], date);
         debris_objects[i].position.set(pos[0], pos[1], pos[2]);
-        console.log(pos);
     }
 }
-
-/*
-let tmp_info_object = {
-    name: 'FENGYUN 1C DEB',
-    type: 'DEBRIS',
-    apogee: '891 Km',
-    perigee: '841 Km',
-    inclination: '99.05 deg',
-    altitude: '874.59 km',
-    velocity: '7.41 Km/s',
-    period: '102.12 min',
-}
-*/
 function get_name(id) {
     let to_text = `${debris[id].name}`
     return to_text;
@@ -50,15 +37,27 @@ function get_name(id) {
 
 function print_info(id) {
     //There should be a function exposed in script that gives this info based on the id of the debris
-    //console.log(debris[id])
-    let to_text = `name: ${get_name(id)}
-    <br>height: ${debris[id].geodeticProperties.height.toFixed(4)} Km
-    <br>latitude: ${debris[id].geodeticProperties.latitude.toFixed(4)}
-    <br>longitude: ${debris[id].geodeticProperties.longitude.toFixed(4)}
-    <br>Velocity: ${debris[id].velocity.toFixed(4)} Km/s
-    <br>Falling to earth: ${predict_eol(debris[id].geodeticProperties.height)}
+    let info = get_info(id)
+    //console.log(info)
+    let to_text = `name: ${debris[id].name}
+    <br>height: ${info["height"].toFixed(4)} Km
+    <br>latitude: ${info["latitude"].toFixed(3)} deg
+    <br>longitude: ${info["longitude"].toFixed(3)} deg
+    <br>Velocity: ${info["velocity"].toFixed(4)} Km/s
+    <br>Falling to earth: ${predict_eol(info["height"])}
         `;
     document.getElementById('debris-info').innerHTML = to_text;
+}
+
+export function get_info(id) {
+    let info = {
+        id: id,
+        height: debris[id].geodeticProperties.height,
+        latitude: debris[id].geodeticProperties.latitude*(180/Math.PI),
+        longitude: debris[id].geodeticProperties.longitude*(180/Math.PI),
+        velocity: debris[id].velocity,
+    };
+    return info;
 }
 
 //MouseMove hightlight object
@@ -77,11 +76,11 @@ function MouseMove() {
     var hits;
     if (useRaycast) {
         raygun.setFromCamera(mouse, camera);
-        hits = raygun.intersectObjects(debris_objects, false);
+        hits = raygun.intersectObjects(scene.children, false);
     }
     const debris_name_card = document.getElementById("debris-name");
     const debris_name_container = document.getElementById("debris-mouseover-name");
-    if (hits.length > 0) {
+    if (hits.length > 0 && hits[0].object.debris_id) {
         if (INTERSECTED != hits[0].object) {
             if (INTERSECTED == null) {
                 INTERSECTED = hits[0].object;
@@ -104,11 +103,13 @@ function onClick() {
     var hits;
     if (useRaycast) {
         raygun.setFromCamera(mouse, camera);
-        hits = raygun.intersectObjects(debris_objects, false);
+        //hits = raygun.intersectObjects(debris_objects, false);
+        hits = raygun.intersectObjects(scene.children, false);
     }
-    if (hits.length > 0) {
-        move_camera_to_debri(camera, hits[0].object);
+    //if (hits.length > 0) {
+    if (hits.length > 0 && hits[0].object.debris_id) {
         print_info(hits[0].object.debris_id);
+        move_camera_to_debri(camera, hits[0].object);
     }
 }
 function move_camera_to_debri(camera, debris) {

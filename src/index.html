@@ -42,17 +42,23 @@
             <span>Radius</span>   <input id="radius-btn" class="number-field" type="number"/>
             </div>
             <div class=dropdown-item>
+            <span>Time in mins</span>   <input id="period-btn" class="number-field" type="number"/>
+            </div>
+            <div class=dropdown-item>
             <button id="area-selector-test" class="area-button">test</button>
             </div>
             <div class=dropdown-item>
             <button id="area-selector-submit" class="area-button">submit</button>
+            </div>
+            <div class=dropdown-item>
+                <span>Num:&nbsp;</span><span id="number-of-debris-area">0</span>
             </div>
         </div>
       </div>
     <div class="slidecontainer">
         <span>Time Slider:&nbsp;</span>
         <output>0</output>
-        <input type="range" min="-24" max="24" value="0" class="slider" id="time-slider" oninput="this.previousElementSibling.value= this.value">
+        <input type="range" min="-24" max="24" step="0.25" value="0" class="slider" id="time-slider" oninput="this.previousElementSibling.value= this.value">
         <button id="slider-button" class="slider-button">submit</button>
     </div>
     <canvas class="webgl"></canvas>

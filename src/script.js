@@ -19,7 +19,7 @@ export const SCALE_RATIO = EARTH_RADIUS / REAL_EARTH_RADIUS;
 //Basic stuff
 //const gui = new dat.GUI()
 const canvas = document.querySelector('canvas.webgl')
-const scene = new THREE.Scene()
+export const scene = new THREE.Scene()          //Need to export it so that mouse_move event can have it with raycasting
 
 export function add_to_scene(obj) {
     scene.add(obj);
@@ -85,19 +85,21 @@ scene.add(camera)
 
 // Controls
 const controls = new OrbitControls(camera, canvas)
+controls.rotateSpeed = 0.3;
 controls.enableDamping = true;
-controls.rotateSpeed = 0.6;
+controls.enablePan = true;
 controls.minDistance = EARTH_RADIUS + 1;
 controls.maxDistance = 10 * EARTH_RADIUS;
 
 //debris
 var debris_positions = [];
-let date = new Date();
+export const origin_date = new Date();
+export let date = new Date();           //Using this to store modified date
 for (let i = 0; i < debris.length; i++) {
     debris_positions.push([i, ...getStationPosition(debris[i], date)]);
 }
 // Debris should be passed with ([ [debris_id, x, y, z], ...], Texture to draw)
-const debris_objects = debris_handler.draw_debris(debris_positions, debrisTexture);
+export const debris_objects = debris_handler.draw_debris(debris_positions, debrisTexture);
 scene.add(...debris_objects);
 
 // Renderer
@@ -113,7 +115,10 @@ let frames = 0
 function tick(time) {
     frames += 1
     if (frames == 60) {
-        debris_handler.updateDebrisPositions();
+        let new_date = new Date();
+        //new_date.setTime(new_date.getTime())
+        new_date.setHours(new_date.getHours()+get_slider_value());
+        debris_handler.updateDebrisPositions(new_date);
         frames = 0;
     }
     controls.update()
