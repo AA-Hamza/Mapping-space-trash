@@ -54,8 +54,8 @@ export function get_info(id) {
     let info = {
         id: id,
         height: debris[id].geodeticProperties.height,
-        longitude: degreesLat(debris[id].geodeticProperties.latitude),
-        latitude: degreesLong(debris[id].geodeticProperties.longitude),
+        latitude: degreesLat(debris[id].geodeticProperties.latitude),
+        longitude: degreesLong(debris[id].geodeticProperties.longitude),
         velocity: debris[id].velocity,
     };
     return info;

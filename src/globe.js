@@ -21,6 +21,7 @@ function atom_shader() {
 
 export function globe(radius, earthTexture, earthNormalMap) {
     const geometry = new SphereGeometry(radius, 32, 32);
+    geometry.rotateY(-Math.PI/2);
     const material = new MeshPhongMaterial();
     material.map = earthTexture;
     material.bumpMap = earthNormalMap;
