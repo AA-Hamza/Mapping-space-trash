@@ -6,7 +6,6 @@ export const debris = [
 	...parseStationsFromFile('data/iridium-33-debris.txt'),
     ...parseStationsFromFile('data/1999-025.txt'),
     ...parseStationsFromFile('data/stations.txt'),
-    ...parseStationsFromFile('data/cosmos-2251-debris.txt'),
     ...parseStationsFromFile('data/tle-new.txt'),
     ...parseStationsFromFile('data/visual.txt'),
     ...parseStationsFromFile('data/active.txt'),
