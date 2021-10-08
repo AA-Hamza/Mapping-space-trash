@@ -32,7 +32,7 @@ function get_values() {
 function test_area(event) {
     event.cancelBubble = true;
     let data = get_values();
-    console.log(data)
+    //console.log(data)
     if (prev_obj) {
         remove_from_scene(prev_obj);
     }
@@ -53,7 +53,7 @@ function test_area(event) {
     cylinderGeo.applyMatrix4( new THREE.Matrix4().makeTranslation(0, height/2, 0) );
     const cylinderMat   = new THREE.MeshNormalMaterial({transparent: true, opacity: 0.4});
     cylinderMat.wireframe = true;
-    console.log(cylinderMat)
+    //console.log(cylinderMat)
     const my_cyli = new THREE.Mesh(cylinderGeo, cylinderMat);
     my_cyli.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), ((data.latitude-90)*Math.PI)/180);
     my_cyli.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), ((data.longitude-90)*Math.PI)/180);
@@ -122,7 +122,7 @@ function sumbit_onclick(event) {
     
     const area_debris = show_number_of_debris_in_area()
     if (area_debris) {
-        console.log("debris in area", area_debris)
+        //console.log("debris in area", area_debris)
         num_of_debris.innerText = area_debris;
     }
 }

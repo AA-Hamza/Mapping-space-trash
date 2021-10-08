@@ -6,6 +6,7 @@ export const parseStationsFromFile = (url) => {
     request.withCredentials = false;
     request.open('GET', url, false);  // `false` makes the request synchronous
     request.send(null);
+    const station_names = [];
     const stations = [];
     if (request.status === 200) {
         var fileContent = request.responseText;
@@ -19,10 +20,15 @@ export const parseStationsFromFile = (url) => {
             } else if (line[0] === '2') {
                 station.tleLine2 = line;
             } else {
-                if (station) stations.push(station);
+                if (station_names.indexOf(line) != -1) {
+                    continue;
+                }
+                if (station) 
+                    stations.push(station);
                 station = { 
                     name: line
                 };
+                station_names.push(line);
             }
         }
         stations.push(station);
@@ -42,6 +48,12 @@ export const getStationPosition = (station, date) => {
     if (!station.satrec) station.satrec = satellite.twoline2satrec(station.tleLine1, station.tleLine2);
     const positionAndVelocity = satellite.propagate(station.satrec, date);
     var gmst = satellite.gstime(new Date());
+    if (station.satrec.error > 0) {
+        station.geodeticProperties = {height: 0, latitude: 0, longitude: 0};
+        station.velocity = 0;
+        return [0, 0, 0];
+    }
+    //console.log(station, positionAndVelocity);
     const geodeticProperties = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
     station.geodeticProperties = geodeticProperties;
     station.velocity = Math.sqrt(Math.pow(positionAndVelocity.velocity.x, 2) + Math.pow(positionAndVelocity.velocity.y, 2) + Math.pow(positionAndVelocity.velocity.z, 2));

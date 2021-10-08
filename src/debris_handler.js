@@ -5,12 +5,8 @@ import * as TWEEN from "@tweenjs/tween.js";
 import { debris } from './satellite_registry.js'
 import { getStationPosition } from './satellite_util.js';
 import { predict_eol } from './predict_eol.js';
-<<<<<<< HEAD
 import {degreesLong, degreesLat} from 'satellite.js/lib/index';
-||||||| merged common ancestors
-=======
-import { degreesLong, degreesLat } from 'satellite.js';
->>>>>>> 086086be0ece33f4c4253c53d7910115d778094c
+//import { degreesLong, degreesLat } from 'satellite.js';
 
 const debris_size = 0.2;
 
@@ -59,16 +55,8 @@ export function get_info(id) {
     let info = {
         id: id,
         height: debris[id].geodeticProperties.height,
-<<<<<<< HEAD
-        longitude: degreesLong(debris[id].geodeticProperties.longitude),
-        latitude: degreesLat(debris[id].geodeticProperties.latitude),
-||||||| merged common ancestors
-        latitude: debris[id].geodeticProperties.latitude*(180/Math.PI),
-        longitude: debris[id].geodeticProperties.longitude*(180/Math.PI),
-=======
         latitude: degreesLat(debris[id].geodeticProperties.latitude),
         longitude: degreesLong(debris[id].geodeticProperties.longitude),
->>>>>>> 086086be0ece33f4c4253c53d7910115d778094c
         velocity: debris[id].velocity,
     };
     return info;

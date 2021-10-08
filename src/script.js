@@ -36,7 +36,7 @@ const starsTexture = textureLoader.load('textures/8k_stars_milky_way.jpg')
 const debrisTexture = textureLoader.load('textures/circle.png')
 
 // sky
-const sky = new THREE.SphereGeometry(90, 64, 64)
+const sky = new THREE.SphereGeometry(50*EARTH_RADIUS, 64, 64)
 const stars = new THREE.MeshBasicMaterial();
 stars.map = starsTexture
 stars.side = THREE.BackSide
@@ -89,7 +89,7 @@ controls.rotateSpeed = 0.3;
 controls.enableDamping = true;
 controls.enablePan = true;
 controls.minDistance = EARTH_RADIUS + 1;
-controls.maxDistance = 10 * EARTH_RADIUS;
+controls.maxDistance = 20 * EARTH_RADIUS;
 
 //debris
 var debris_positions = [];

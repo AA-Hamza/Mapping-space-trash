@@ -3,7 +3,6 @@
 
 export function predict_eol(height) {
     const mean = parseInt(height);//(apogee+penigee)/2;
-    console.log(mean)
     if (mean <= 500) {
         return '1-25 years';
     }
