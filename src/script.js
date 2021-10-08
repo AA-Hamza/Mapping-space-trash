@@ -30,10 +30,10 @@ export function remove_from_scene(obj) {
 
 // Textures
 const textureLoader = new THREE.TextureLoader()
-const earthTexture = textureLoader.load('textures/EarthTexture.jpg')
-const earthNormalMap = textureLoader.load('textures/NormalMap.jpg')
-const starsTexture = textureLoader.load('textures/8k_stars_milky_way.jpg')
-const debrisTexture = textureLoader.load('textures/circle.png')
+const earthTexture = textureLoader.load('compressed_textures/EarthTexture.jpg')
+const earthNormalMap = textureLoader.load('compressed_textures/NormalMap.jpg')
+const starsTexture = textureLoader.load('compressed_textures/8k_stars_milky_way.jpg')
+const debrisTexture = textureLoader.load('compressed_textures/circle.png')
 
 // sky
 const sky = new THREE.SphereGeometry(50*EARTH_RADIUS, 64, 64)
