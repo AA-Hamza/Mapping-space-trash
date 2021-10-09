@@ -25,5 +25,5 @@ npm run build
 ### Selecting Time
 ![](readme_images/Time_Slider.png)
 
-## Selecting Certain volume/area and see how many debris pass in a selected time period
+### Selecting Certain volume/area and see how many debris pass in a selected time period
 ![](readme_images/Area_Selector.png)
