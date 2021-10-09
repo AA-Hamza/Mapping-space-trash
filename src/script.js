@@ -79,7 +79,7 @@ window.addEventListener('resize', () => {
 export const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.01, 1000)
 camera.position.x = 0
 camera.position.y = 0
-camera.position.z = 20
+camera.position.z = EARTH_RADIUS*5
 scene.add(camera)
 
 
@@ -116,7 +116,6 @@ function tick(time) {
     frames += 1
     if (frames == 60) {
         let new_date = new Date();
-        //new_date.setTime(new_date.getTime())
         new_date.setHours(new_date.getHours()+get_slider_value());
         debris_handler.updateDebrisPositions(new_date);
         frames = 0;
