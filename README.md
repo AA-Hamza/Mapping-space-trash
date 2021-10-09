@@ -16,14 +16,14 @@ npm run build
 ```
 
 ## Images of the program running
-**The start screen**
+### The start screen
 ![](readme_images/Loading.png)
 
-**Selecting certain object** 
+### Selecting certain object
 ![](readme_images/Specific_Debris.png)
 
-**Selecting Time**
+### Selecting Time
 ![](readme_images/Time_Slider.png)
 
-**Selecting Certain volume/area and see how many debris pass in a selected time period**
+## Selecting Certain volume/area and see how many debris pass in a selected time period
 ![](readme_images/Area_Selector.png)
